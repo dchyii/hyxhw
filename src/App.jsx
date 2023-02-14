@@ -1,11 +1,9 @@
-import { useState } from "react";
-import "./App.css";
+import Navbar from "./components/Navbar";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="App bg-slate-100 w-screen h-screen">
+      <Navbar />
       <h1>hello world!</h1>
     </div>
   );
