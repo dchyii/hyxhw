@@ -1,10 +1,12 @@
 import Navbar from "./components/Navbar";
+import Post from "./components/Post";
 
 function App() {
   return (
     <div className="App bg-slate-100 w-screen h-screen">
       <Navbar />
-      <h1>hello world!</h1>
+      <Post />
+      <Post />
     </div>
   );
 }
