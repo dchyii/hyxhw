@@ -16,10 +16,7 @@ const Post = () => {
             </h3>
             <h3>Desmond</h3>
           </div>
-          <div className="flex">
-            <Heart />
-            <span>99</span>
-          </div>
+          <Heart />
         </div>
         <p className=" mb-5">comment comment comment</p>
       </div>
