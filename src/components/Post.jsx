@@ -9,12 +9,17 @@ const Post = () => {
         className="aspect-auto"
       />
       <div className="px-3">
-        <div className="flex mt-3">
-          <h3 className="bg-slate-700 border border-slate-800 rounded-full w-7 h-7 mx-2 text-white text-center">
-            D
-          </h3>
-          <h3>Desmond</h3>
-          <Heart />
+        <div className="flex mt-3 w-full justify-between">
+          <div className="flex">
+            <h3 className="bg-slate-700 border border-slate-800 rounded-full w-7 h-7 mx-2 text-white text-center">
+              D
+            </h3>
+            <h3>Desmond</h3>
+          </div>
+          <div className="flex">
+            <Heart />
+            <span>99</span>
+          </div>
         </div>
         <p className=" mb-5">comment comment comment</p>
       </div>
