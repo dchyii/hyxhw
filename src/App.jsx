@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
 import Post from "./components/Post";
+import PostButton from "./components/PostButton";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <Navbar />
       <Post />
       <Post />
+      <PostButton />
     </div>
   );
 }
