@@ -1,4 +1,5 @@
 import React from "react";
+import Heart from "./Heart";
 
 const Post = () => {
   return (
@@ -13,6 +14,7 @@ const Post = () => {
             D
           </h3>
           <h3>Desmond</h3>
+          <Heart />
         </div>
         <p className=" mb-5">comment comment comment</p>
       </div>
