@@ -7,9 +7,9 @@ const Navbar = () => {
         <div className="overflow-visible">
           <h1 className="font-logo text-5xl">hy x hw </h1>
         </div>
-        <button className="border border-slate-500 px-5 flex items-center content-center shadow-md">
+        {/* <button className="border border-slate-500 px-5 flex items-center content-center shadow-md">
           <span className="text-xl">log in</span>
-        </button>
+        </button> */}
       </div>
     </div>
   );
