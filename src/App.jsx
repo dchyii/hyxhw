@@ -3,9 +3,12 @@ import Post from "./components/Post";
 import PostButton from "./components/PostButton";
 import { db } from "../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import StartScreen from "./components/StartScreen";
+import Posts from "./components/Posts";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     const fetchPost = () => {
       console.log("fetch post data");
@@ -14,12 +17,12 @@ function App() {
     fetchPost();
   }, []);
 
+  const display = isLoggedIn ? <Posts /> : <StartScreen />;
+
   return (
-    <div className="App bg-slate-100 w-screen h-screen pt-10 overflow-scroll">
+    <div className="bg-slate-100 w-screen h-screen pt-10 overflow-scroll">
       <Navbar />
-      <Post />
-      <Post />
-      <PostButton />
+      {display}
     </div>
   );
 }
