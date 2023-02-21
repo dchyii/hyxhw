@@ -17,7 +17,11 @@ function App() {
     fetchPost();
   }, []);
 
-  const display = isLoggedIn ? <Posts /> : <StartScreen />;
+  const display = isLoggedIn ? (
+    <Posts />
+  ) : (
+    <StartScreen fnLogIn={setIsLoggedIn} />
+  );
 
   return (
     <div className="bg-slate-100 w-screen h-screen pt-10 overflow-scroll">
