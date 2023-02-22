@@ -48,11 +48,13 @@ const StartScreen = ({ fnLogIn }) => {
           value={username}
           onChange={(e) => {
             setUsername(e.target.value);
+            console.log(username.length);
           }}
         />
         <button
           type="submit"
-          className="font-logo text-2xl border border-slate-500 bg-slate-200 rounded-lg px-5 py-1 my-3"
+          className="font-logo text-2xl border border-slate-300 enabled:bg-green-300 disabled:bg-slate-200 rounded-lg px-5 py-1 my-3"
+          disabled={username.length < 2 ? true : false}
         >
           Let's Go!
         </button>
