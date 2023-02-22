@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import { getAuth, signInAnonymously, updateProfile } from "firebase/auth";
 
 const StartScreen = ({ fnLogIn }) => {
+  const [username, setUsername] = useState("");
+
+  const auth = getAuth();
+
   const handleLogIn = (e) => {
     e.preventDefault();
-    console.log("logging in");
-    fnLogIn(true);
+    console.log("logging in:", username);
+    signInAnonymously(auth)
+      .then(() => {
+        // Signed in..
+        const uid = auth.currentUser.uid;
+        updateProfile(auth.currentUser, {
+          displayName: username,
+        })
+          .then(() => {
+            console.log("auth user:", auth.currentUser);
+            fnLogIn(true);
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage);
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+        // ...
+      });
   };
   return (
     <div className="w-full h-full bg-slate-100 flex object-center items-center">
@@ -18,6 +45,10 @@ const StartScreen = ({ fnLogIn }) => {
           type="text"
           placeholder="display name"
           className="w-full border border-slate-200 rounded-lg px-2"
+          value={username}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
         />
         <button
           type="submit"
