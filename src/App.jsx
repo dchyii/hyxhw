@@ -12,6 +12,7 @@ function App() {
   const [firstLoad, setFirstLoad] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
+  const [posts, setPosts] = useState([]);
 
   const auth = getAuth();
 
@@ -32,11 +33,23 @@ function App() {
         }
       });
     };
-    const fetchPost = () => {
-      console.log("fetch post data");
+
+    // const fetchPost = async () => {
+    const getPosts = async () => {
+      const postsArr = [];
+      const data = await getDocs(collection(db, "posts"));
+      console.log("data", data);
+      data.docs.map((doc) => {
+        postsArr.push({ ...doc.data(), id: doc.id });
+      });
+      setPosts(postsArr);
+      console.log("posts: ", posts);
+      // };
+      // console.log("fetch post data");
     };
     checkUser();
-    fetchPost();
+    // fetchPost();
+    getPosts();
   }, []);
 
   const display = firstLoad ? (
