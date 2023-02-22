@@ -1,24 +1,22 @@
 import React from "react";
 import Heart from "./Heart";
 
-const Post = () => {
+const Post = ({ postData }) => {
+  console.log("post: ", postData);
   return (
-    <div className="w-4/5 max-w-lg bg-white mx-auto my-12 border border-slate-300">
-      <img
-        src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
-        className="aspect-auto"
-      />
+    <div className="w-4/5 max-w-lg bg-white mx-auto my-8 border border-slate-300">
+      <img src={postData.url} className="aspect-auto" />
       <div className="px-3">
         <div className="flex mt-3 w-full justify-between">
           <div className="flex">
             <h3 className="bg-slate-700 border border-slate-800 rounded-full w-7 h-7 mx-2 text-white text-center">
-              D
+              {postData.user.charAt(0).toLowerCase()}
             </h3>
-            <h3>Desmond</h3>
+            <h3>{postData.user}</h3>
           </div>
-          <Heart />
+          <Heart likes={postData.likes} />
         </div>
-        <p className=" mb-5">comment comment comment</p>
+        <p className=" mb-3 mt-2 px-3">{postData.caption}</p>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-const Heart = () => {
+const Heart = ({ likes }) => {
   const [isLiked, setIsLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(99);
+  const [likesCount, setLikesCount] = useState(likes.length);
   const fill = isLiked ? "red" : "none";
   const outline = isLiked ? "red" : "black";
 
