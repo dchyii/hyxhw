@@ -25,7 +25,7 @@ function App() {
           setUser(user);
           setIsLoggedIn(true);
           setFirstLoad(false);
-          console.log("user: ", user);
+          // console.log("user: ", user);
         } else {
           setUser({});
           setIsLoggedIn(false);
@@ -34,28 +34,23 @@ function App() {
       });
     };
 
-    // const fetchPost = async () => {
-    const getPosts = async () => {
+    const fetchPost = async () => {
       const postsArr = [];
       const data = await getDocs(collection(db, "posts"));
-      console.log("data", data);
+      // console.log("data", data);
       data.docs.map((doc) => {
         postsArr.push({ ...doc.data(), id: doc.id });
       });
       setPosts(postsArr);
-      console.log("posts: ", posts);
-      // };
-      // console.log("fetch post data");
     };
     checkUser();
-    // fetchPost();
-    getPosts();
+    fetchPost();
   }, []);
 
   const display = firstLoad ? (
     ""
   ) : isLoggedIn ? (
-    <Posts />
+    <Posts postsState={[posts, setPosts]} />
   ) : (
     <StartScreen fnLogIn={setIsLoggedIn} />
   );
