@@ -14,24 +14,25 @@ function App() {
 
   const auth = getAuth();
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      setUser(user);
-      setIsLoggedIn(true);
-      console.log("user: ", user);
-    } else {
-      setUser({});
-      setIsLoggedIn(false);
-    }
-  });
-
   useEffect(() => {
+    const checkUser = async () => {
+      await onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          setUser(user);
+          setIsLoggedIn(true);
+          console.log("user: ", user);
+        } else {
+          setUser({});
+          setIsLoggedIn(false);
+        }
+      });
+    };
     const fetchPost = () => {
       console.log("fetch post data");
     };
-
+    checkUser();
     fetchPost();
   }, []);
 
