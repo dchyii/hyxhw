@@ -14,7 +14,7 @@ const Post = ({ postData }) => {
             </h3>
             <h3>{postData.user}</h3>
           </div>
-          <Heart likes={postData.likes} />
+          <Heart postId={postData.id} likes={postData.likes} />
         </div>
         <p className=" mb-3 mt-2 px-3">{postData.caption}</p>
       </div>
