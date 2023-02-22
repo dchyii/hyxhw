@@ -9,6 +9,7 @@ import StartScreen from "./components/StartScreen";
 import Posts from "./components/Posts";
 
 function App() {
+  const [firstLoad, setFirstLoad] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
 
@@ -22,10 +23,12 @@ function App() {
           // https://firebase.google.com/docs/reference/js/firebase.User
           setUser(user);
           setIsLoggedIn(true);
+          setFirstLoad(false);
           console.log("user: ", user);
         } else {
           setUser({});
           setIsLoggedIn(false);
+          setFirstLoad(false);
         }
       });
     };
@@ -36,7 +39,9 @@ function App() {
     fetchPost();
   }, []);
 
-  const display = isLoggedIn ? (
+  const display = firstLoad ? (
+    ""
+  ) : isLoggedIn ? (
     <Posts />
   ) : (
     <StartScreen fnLogIn={setIsLoggedIn} />
