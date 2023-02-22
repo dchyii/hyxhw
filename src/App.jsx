@@ -20,6 +20,7 @@ function App() {
       // https://firebase.google.com/docs/reference/js/firebase.User
       setUser(user);
       setIsLoggedIn(true);
+      console.log("user: ", user);
     } else {
       setUser({});
       setIsLoggedIn(false);

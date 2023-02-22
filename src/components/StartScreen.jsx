@@ -17,7 +17,6 @@ const StartScreen = ({ fnLogIn }) => {
           displayName: username,
         })
           .then(() => {
-            console.log("auth user:", auth.currentUser);
             fnLogIn(true);
           })
           .catch((error) => {
@@ -48,7 +47,6 @@ const StartScreen = ({ fnLogIn }) => {
           value={username}
           onChange={(e) => {
             setUsername(e.target.value);
-            console.log(username.length);
           }}
         />
         <button
