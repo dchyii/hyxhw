@@ -7,9 +7,11 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react";
 import StartScreen from "./components/StartScreen";
 import Posts from "./components/Posts";
+import UploadScreen from "./components/UploadScreen";
 
 function App() {
-  const [firstLoad, setFirstLoad] = useState(true);
+  // const [firstLoad, setFirstLoad] = useState(true);
+  const [screen, setScreen] = useState("loading");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
@@ -24,12 +26,14 @@ function App() {
           // https://firebase.google.com/docs/reference/js/firebase.User
           setUser(user);
           setIsLoggedIn(true);
-          setFirstLoad(false);
+          setScreen("Is Logged In");
+          // setFirstLoad(false);
           // console.log("user: ", user);
         } else {
           setUser({});
           setIsLoggedIn(false);
-          setFirstLoad(false);
+          setScreen("Not Logged In");
+          // setFirstLoad(false);
         }
       });
     };
@@ -47,13 +51,29 @@ function App() {
     fetchPost();
   }, []);
 
-  const display = firstLoad ? (
-    ""
-  ) : isLoggedIn ? (
-    <Posts postsState={[posts, setPosts]} />
-  ) : (
-    <StartScreen fnLogIn={setIsLoggedIn} />
-  );
+  // const display = firstLoad ? (
+  // "loading"
+  // ) : isLoggedIn ? (
+  // const display = isLoggedIn ? (
+  //   <Posts postsState={[posts, setPosts]} />
+  // ) : (
+  //   <StartScreen fnLogIn={setIsLoggedIn} />
+  // );
+  let display = "";
+
+  switch (screen) {
+    case "Not Logged In":
+      display = <StartScreen fnLogIn={setIsLoggedIn} />;
+      break;
+    case "Is Logged In":
+      display = <Posts postsState={[posts, setPosts]} />;
+      break;
+    case "Upload Post":
+      display = <UploadScreen />;
+      break;
+    default:
+      break;
+  }
 
   return (
     <div className="bg-slate-100 w-screen h-screen pt-10 overflow-scroll">
