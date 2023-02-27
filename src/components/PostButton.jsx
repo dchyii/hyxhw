@@ -1,8 +1,9 @@
 import React from "react";
 
-const PostButton = () => {
+const PostButton = ({ fnSetScreen }) => {
   const handlePost = () => {
     console.log("post");
+    fnSetScreen("Upload Post");
   };
   return (
     <button

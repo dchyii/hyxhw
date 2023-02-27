@@ -66,7 +66,9 @@ function App() {
       display = <StartScreen fnLogIn={setIsLoggedIn} />;
       break;
     case "Is Logged In":
-      display = <Posts postsState={[posts, setPosts]} />;
+      display = (
+        <Posts postsState={[posts, setPosts]} fnSetScreen={setScreen} />
+      );
       break;
     case "Upload Post":
       display = <UploadScreen />;
