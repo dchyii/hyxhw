@@ -71,7 +71,7 @@ function App() {
       );
       break;
     case "Upload Post":
-      display = <UploadScreen />;
+      display = <UploadScreen fnSetScreen={setScreen} />;
       break;
     default:
       break;
