@@ -5,6 +5,8 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { doc, addDoc, serverTimestamp, collection } from "firebase/firestore";
+import { db } from "../../firebase-config";
 
 const UploadScreen = ({ fnSetScreen }) => {
   const [file, setFile] = useState(null);
@@ -28,14 +30,28 @@ const UploadScreen = ({ fnSetScreen }) => {
         setProgress(progress);
       },
       (error) => {
-        console.error(error.message);
+        // console.error(error.message);
         alert("Upload failed. Please try again.");
         setProgress(0);
         setIsUploading(false);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
           console.log("url available at: ", downloadUrl);
+          const newPostData = {
+            caption: caption,
+            likes: [],
+            timestamp: serverTimestamp(),
+            url: downloadUrl,
+            user: "test user",
+          };
+          await addDoc(collection(db, "posts"), newPostData);
+          setProgress(0);
+          setCaption("");
+          setFile(null);
+          setIsUploading(false);
+          fnSetScreen("Is Logged In");
+          alert("Uploaded!");
         });
       }
     );
