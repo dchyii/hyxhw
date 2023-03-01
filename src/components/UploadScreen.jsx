@@ -1,9 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 const UploadScreen = ({ fnSetScreen }) => {
+  const [file, setFile] = useState(null);
+  const [caption, setCaption] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const storage = getStorage();
+  const storageRef = ref(storage, "images/" + file?.name);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
   const handleUpload = (e) => {
     e.preventDefault();
     console.log("handle upload");
+    setIsUploading(true);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+      },
+      (error) => {
+        console.error(error.message);
+        alert("Upload failed. Please try again.");
+        setProgress(0);
+        setIsUploading(false);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+          console.log("url available at: ", downloadUrl);
+        });
+      }
+    );
   };
   return (
     <div className="w-full h-full bg-slate-100 flex object-center items-center">
@@ -35,18 +70,24 @@ const UploadScreen = ({ fnSetScreen }) => {
         <input
           type="file"
           className="w-full border border-slate-200 rounded-lg px-2 my-2"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files[0])}
         />
+        <progress value={progress} max={100}>
+          {progress + "%"}
+        </progress>
         <input
           type="text"
           placeholder="Please enter your well wishes for the couple ..."
           className="w-full border border-slate-200 rounded-lg px-2 my-2"
+          onChange={(e) => setCaption(e.target.value)}
         />
         <button
           type="submit"
           className="font-logo text-2xl border border-slate-300 enabled:bg-green-300 disabled:bg-slate-200 rounded-lg px-5 py-1 my-3"
-          //   disabled={username.length < 2 ? true : false}
+          disabled={isUploading ? true : !file || !caption ? true : false}
         >
-          POST!
+          {isUploading ? "UPLOADING!" : "POST!"}
         </button>
       </form>
     </div>
