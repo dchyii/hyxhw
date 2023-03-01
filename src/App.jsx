@@ -19,6 +19,16 @@ function App() {
   const auth = getAuth();
 
   useEffect(() => {
+    const fetchPost = async () => {
+      const postsArr = [];
+      const data = await getDocs(collection(db, "posts"));
+      // console.log("data", data);
+      data.docs.map((doc) => {
+        postsArr.push({ ...doc.data(), id: doc.id });
+      });
+      setPosts(postsArr);
+    };
+
     const checkUser = async () => {
       await onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -27,6 +37,7 @@ function App() {
           setUser(user);
           setIsLoggedIn(true);
           setScreen("Is Logged In");
+          fetchPost();
           // setFirstLoad(false);
           // console.log("user: ", user);
         } else {
@@ -38,17 +49,7 @@ function App() {
       });
     };
 
-    const fetchPost = async () => {
-      const postsArr = [];
-      const data = await getDocs(collection(db, "posts"));
-      // console.log("data", data);
-      data.docs.map((doc) => {
-        postsArr.push({ ...doc.data(), id: doc.id });
-      });
-      setPosts(postsArr);
-    };
     checkUser();
-    fetchPost();
   }, []);
 
   // const display = firstLoad ? (
