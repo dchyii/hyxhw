@@ -8,7 +8,7 @@ import {
 import { doc, addDoc, serverTimestamp, collection } from "firebase/firestore";
 import { db } from "../../firebase-config";
 
-const UploadScreen = ({ fnSetScreen }) => {
+const UploadScreen = ({ fnSetScreen, posts, fnSetPosts, user }) => {
   const [file, setFile] = useState(null);
   const [caption, setCaption] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -43,14 +43,19 @@ const UploadScreen = ({ fnSetScreen }) => {
             likes: [],
             timestamp: serverTimestamp(),
             url: downloadUrl,
-            user: "test user",
+            user: user,
           };
-          await addDoc(collection(db, "posts"), newPostData);
+          const newPostRef = await addDoc(collection(db, "posts"), newPostData);
+          posts.unshift({
+            ...newPostData,
+            id: newPostRef,
+          });
           setProgress(0);
           setCaption("");
           setFile(null);
           setIsUploading(false);
           fnSetScreen("Is Logged In");
+          fnSetPosts(posts);
           alert("Uploaded!");
         });
       }
@@ -89,9 +94,6 @@ const UploadScreen = ({ fnSetScreen }) => {
           accept="image/*"
           onChange={(e) => setFile(e.target.files[0])}
         />
-        <progress value={progress} max={100}>
-          {progress + "%"}
-        </progress>
         <input
           type="text"
           placeholder="Please enter your well wishes for the couple ..."
@@ -103,7 +105,7 @@ const UploadScreen = ({ fnSetScreen }) => {
           className="font-logo text-2xl border border-slate-300 enabled:bg-green-300 disabled:bg-slate-200 rounded-lg px-5 py-1 my-3"
           disabled={isUploading ? true : !file || !caption ? true : false}
         >
-          {isUploading ? "UPLOADING!" : "POST!"}
+          {isUploading ? `${progress}%` : "POST!"}
         </button>
       </form>
     </div>

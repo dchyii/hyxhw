@@ -71,7 +71,14 @@ function App() {
       );
       break;
     case "Upload Post":
-      display = <UploadScreen fnSetScreen={setScreen} />;
+      display = (
+        <UploadScreen
+          fnSetScreen={setScreen}
+          posts={posts}
+          fnSetPosts={setPosts}
+          user={user.displayName}
+        />
+      );
       break;
     default:
       break;
