@@ -68,7 +68,11 @@ function App() {
       break;
     case "Is Logged In":
       display = (
-        <Posts postsState={[posts, setPosts]} fnSetScreen={setScreen} />
+        <Posts
+          postsState={[posts, setPosts]}
+          fnSetScreen={setScreen}
+          user={user.displayName}
+        />
       );
       break;
     case "Upload Post":

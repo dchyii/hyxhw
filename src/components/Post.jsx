@@ -1,8 +1,8 @@
 import React from "react";
 import Heart from "./Heart";
 
-const Post = ({ postData }) => {
-  console.log("post: ", postData);
+const Post = ({ postData, currentUser }) => {
+  // console.log("post: ", postData);
   return (
     <div className="w-4/5 max-w-lg bg-white mx-auto my-8 border border-slate-300">
       <img src={postData.url} className="aspect-auto" />
@@ -14,7 +14,11 @@ const Post = ({ postData }) => {
             </h3>
             <h3>{postData.user}</h3>
           </div>
-          <Heart postId={postData.id} likes={postData.likes} />
+          <Heart
+            postId={postData.id}
+            likes={postData.likes}
+            currentUser={currentUser}
+          />
         </div>
         <p className=" mb-3 mt-2 px-3">{postData.caption}</p>
       </div>

@@ -2,34 +2,25 @@ import React, { useState, useEffect } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase-config";
 
-const Heart = ({ postId, likes }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [likesArr, setLikesArr] = useState([]);
+const Heart = ({ postId, likes, currentUser }) => {
+  const [isLiked, setIsLiked] = useState(
+    likes.findIndex((likedUser) => likedUser === currentUser) >= 0
+      ? true
+      : false
+  );
+  const [likesArr, setLikesArr] = useState(likes);
   const fill = isLiked ? "red" : "none";
   const outline = isLiked ? "red" : "black";
 
-  // useEffect(() => {
-  //   const getLikes = async () => {
-  //     const likes = [];
-  //     const snapshot = await onSnapshot(
-  //       doc(db, "posts", String(postId)),
-  //       (doc) => {
-  //         const data = doc.data();
-  //         likes.push(data.likes);
-  //       }
-  //     );
-  //   };
-  //   getLikes();
-  //   setLikesCount(likes.length);
-  // }, []);
-
-  const snapshot = onSnapshot(doc(db, "posts", String(postId)), (doc) => {
-    const data = doc.data();
-    setLikesArr(data.likes);
-  });
-
   const handleLike = () => {
-    setLikesCount(isLiked ? likesCount - 1 : likesCount + 1);
+    const getIndex = likes.findIndex((likedUser) => likedUser === currentUser);
+    const tempArr = likesArr;
+    getIndex >= 0
+      ? tempArr.splice(getIndex, 1)
+      : tempArr.splice(0, 0, currentUser);
+
+    // update UI
+    setLikesArr(tempArr);
     setIsLiked(!isLiked);
 
     // add handleLike backend code here
