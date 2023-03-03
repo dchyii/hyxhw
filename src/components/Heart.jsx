@@ -29,7 +29,7 @@ const Heart = ({ postId, likes, currentUser }) => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex cursor-pointer">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill={fill}
