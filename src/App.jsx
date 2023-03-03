@@ -39,7 +39,7 @@ function App() {
           setScreen("Is Logged In");
           fetchPost();
           // setFirstLoad(false);
-          // console.log("user: ", user);
+          console.log("user: ", user);
         } else {
           setUser({});
           setIsLoggedIn(false);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase-config";
+import useLike from "../Utils/useLike";
 
 const Heart = ({ postId, likes, currentUser }) => {
   const [isLiked, setIsLiked] = useState(
@@ -24,6 +25,7 @@ const Heart = ({ postId, likes, currentUser }) => {
     setIsLiked(!isLiked);
 
     // add handleLike backend code here
+    useLike(postId, tempArr);
   };
 
   return (
