@@ -4,7 +4,7 @@ import { db } from "../../firebase-config";
 
 const useLike = async (postId, likesArr) => {
   const postRef = doc(db, "posts", postId);
-  console.log("postRef: ", postRef);
+  // console.log("postRef: ", postRef);
   await updateDoc(postRef, {
     likes: likesArr,
   });

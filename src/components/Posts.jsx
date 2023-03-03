@@ -10,8 +10,6 @@ const Posts = ({ postsState, fnSetScreen, user }) => {
       {postsState[0].map((post) => {
         return <Post key={post.id} postData={post} currentUser={user} />;
       })}
-      {/* <Post /> */}
-      {/* <Post /> */}
       <PostButton fnSetScreen={fnSetScreen} />
     </div>
   );
