@@ -102,7 +102,7 @@ const UploadScreen = ({ fnSetScreen, posts, fnSetPosts, user }) => {
         />
         <button
           type="submit"
-          className="font-logo text-2xl border border-slate-300 enabled:bg-green-300 disabled:bg-slate-200 rounded-lg px-5 py-1 my-3"
+          className="font-logo text-2xl border border-slate-300 enabled:bg-green-300 disabled:bg-slate-200 rounded-lg px-5 py-1 my-3 enabled:cursor-pointer"
           disabled={isUploading ? true : !file || !caption ? true : false}
         >
           {isUploading ? `${progress}%` : "POST!"}
