@@ -1,8 +1,13 @@
 import Navbar from "./components/Navbar";
-import Post from "./components/Post";
-import PostButton from "./components/PostButton";
 import { db } from "../firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  startAfter,
+} from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react";
 import StartScreen from "./components/StartScreen";
@@ -15,20 +20,42 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
+  const [docBookmark, setDocBookmark] = useState(null);
+  const [lastDocFetched, setLastDocFetched] = useState(false);
 
   const auth = getAuth();
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      const postsArr = [];
-      const data = await getDocs(collection(db, "posts"));
-      // console.log("data", data);
-      data.docs.map((doc) => {
-        postsArr.push({ ...doc.data(), id: doc.id });
-      });
-      setPosts(postsArr);
-    };
+  const fetchPost = async () => {
+    const postsArr = posts;
+    const fetchNumber = 4;
+    // console.log("posts arr: ", postsArr);
+    const queryExpression = docBookmark
+      ? query(
+          collection(db, "posts"),
+          orderBy("timestamp", "desc"),
+          limit(fetchNumber),
+          startAfter(docBookmark)
+        )
+      : query(
+          collection(db, "posts"),
+          orderBy("timestamp", "desc"),
+          limit(fetchNumber)
+        );
+    const data = await getDocs(queryExpression);
+    // console.log("data", data);
+    // console.log("fetch");
+    data.docs.map((doc) => {
+      postsArr.push({ ...doc.data(), id: doc.id });
+    });
+    setPosts(postsArr);
+    console.log("last entry: ", data.docs[data.docs.length - 1]);
+    setDocBookmark(data.docs[data.docs.length - 1]);
+    if (data.docs.length < fetchNumber) {
+      setLastDocFetched(true);
+    }
+  };
 
+  useEffect(() => {
     const checkUser = async () => {
       await onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -72,6 +99,8 @@ function App() {
           postsState={[posts, setPosts]}
           fnSetScreen={setScreen}
           user={user.displayName}
+          fnFetchPost={fetchPost}
+          lastDocFetched={lastDocFetched}
         />
       );
       break;
