@@ -21,6 +21,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [docBookmark, setDocBookmark] = useState(null);
   const [lastDocFetched, setLastDocFetched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const auth = getAuth();
 
@@ -28,6 +29,7 @@ function App() {
     const postsArr = posts;
     const fetchNumber = 4;
     // console.log("posts arr: ", postsArr);
+    setIsLoading(true);
     const queryExpression = docBookmark
       ? query(
           collection(db, "posts"),
@@ -47,6 +49,7 @@ function App() {
       postsArr.push({ ...doc.data(), id: doc.id });
     });
     setPosts(postsArr);
+    setIsLoading(false);
     console.log("last entry: ", data.docs[data.docs.length - 1]);
     setDocBookmark(data.docs[data.docs.length - 1]);
     if (data.docs.length < fetchNumber) {
@@ -92,6 +95,7 @@ function App() {
           user={user.displayName}
           fnFetchPost={fetchPost}
           lastDocFetched={lastDocFetched}
+          isLoading={isLoading}
         />
       );
       break;
