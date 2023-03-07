@@ -7,7 +7,7 @@ const PostButton = ({ fnSetScreen }) => {
   };
   return (
     <button
-      className="absolute w-16 h-16 rounded-full bg-sky-500 right-10 bottom-10 opacity-90 shadow-xl"
+      className="absolute w-20 h-20 rounded-full bg-sky-500 right-10 bottom-10 opacity-90 shadow-xl border border-white"
       onClick={handlePost}
     >
       <svg

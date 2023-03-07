@@ -114,7 +114,7 @@ function App() {
   }
 
   return (
-    <div className="bg-slate-100 w-screen h-screen pt-10 overflow-scroll">
+    <div className="bg-slate-100 w-screen h-screen pt-10 overflow-scroll bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400">
       <Navbar user={user.displayName} />
       {display}
     </div>

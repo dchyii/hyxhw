@@ -4,7 +4,7 @@ import Heart from "./Heart";
 const Post = ({ postData, currentUser }) => {
   // console.log("post: ", postData);
   return (
-    <div className="w-4/5 max-w-lg bg-white mx-auto my-8 border border-slate-300">
+    <div className="w-4/5 max-w-lg bg-white mx-auto my-8 border-2 border-slate-300 rounded-2xl overflow-hidden shadow-2xl">
       <img src={postData.url} className="aspect-auto" loading="lazy" />
       <div className="px-3">
         <div className="flex mt-3 w-full justify-between">
