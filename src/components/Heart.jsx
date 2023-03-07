@@ -29,7 +29,7 @@ const Heart = ({ postId, likes, currentUser }) => {
   };
 
   return (
-    <div className="flex cursor-pointer">
+    <div className="flex cursor-pointer" onClick={handleLike}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill={fill}
@@ -37,7 +37,6 @@ const Heart = ({ postId, likes, currentUser }) => {
         strokeWidth={1.5}
         stroke={outline}
         className="w-6 h-6"
-        onClick={handleLike}
       >
         <path
           strokeLinecap="round"
