@@ -115,7 +115,7 @@ function App() {
 
   return (
     <div className="bg-slate-100 w-screen h-screen pt-10 overflow-scroll">
-      <Navbar />
+      <Navbar user={user.displayName} />
       {display}
     </div>
   );
