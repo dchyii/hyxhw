@@ -15,7 +15,6 @@ import Posts from "./components/Posts";
 import UploadScreen from "./components/UploadScreen";
 
 function App() {
-  // const [firstLoad, setFirstLoad] = useState(true);
   const [screen, setScreen] = useState("loading");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
@@ -79,14 +78,6 @@ function App() {
     checkUser();
   }, []);
 
-  // const display = firstLoad ? (
-  // "loading"
-  // ) : isLoggedIn ? (
-  // const display = isLoggedIn ? (
-  //   <Posts postsState={[posts, setPosts]} />
-  // ) : (
-  //   <StartScreen fnLogIn={setIsLoggedIn} />
-  // );
   let display = "";
 
   switch (screen) {
