@@ -16,7 +16,11 @@ const Posts = ({
     const positionTop = e.target.scrollTop;
     const divHeight = e.target.clientHeight;
 
-    if (positionTop + divHeight + 1 >= totalHeight && !lastDocFetched) {
+    if (
+      positionTop + divHeight + 1 >= totalHeight &&
+      !lastDocFetched &&
+      !isLoading
+    ) {
       fnFetchPost();
     }
   };
