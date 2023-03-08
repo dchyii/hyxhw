@@ -33,9 +33,9 @@ const StartScreen = ({ fnLogIn }) => {
       });
   };
   return (
-    <div className="w-full h-full bg-slate-100 flex object-center items-center">
+    <div className="w-full h-full flex object-center items-center">
       <form
-        className="w-4/5 max-w-xl mx-auto p-5 border border-slate-300 shadow-xl rounded-lg flex flex-col items-center"
+        className="w-4/5 max-w-xl mx-auto p-5 border border-slate-300  bg-slate-100 shadow-xl rounded-lg flex flex-col items-center"
         onSubmit={handleLogIn}
       >
         <h1 className="font-logo text-4xl">hello!</h1>

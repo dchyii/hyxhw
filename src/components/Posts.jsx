@@ -26,7 +26,7 @@ const Posts = ({
   };
 
   return (
-    <div onScroll={handleScroll} className="h-full overflow-auto">
+    <div onScroll={handleScroll} className="h-screen overflow-auto">
       {postsState[0].map((post) => {
         return <Post key={post.id} postData={post} currentUser={user} />;
       })}

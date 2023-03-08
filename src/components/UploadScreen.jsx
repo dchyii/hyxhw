@@ -62,9 +62,9 @@ const UploadScreen = ({ fnSetScreen, posts, fnSetPosts, user }) => {
     );
   };
   return (
-    <div className="w-full h-full bg-slate-100 flex object-center items-center">
+    <div className="w-full h-full flex object-center items-center">
       <form
-        className="w-4/5 max-w-xl mx-auto p-5 pt-8 border border-slate-300 shadow-xl rounded-lg flex flex-col items-center relative"
+        className="w-4/5 max-w-xl mx-auto p-5 pt-8 border border-slate-300 bg-slate-100 shadow-xl rounded-lg flex flex-col items-center relative"
         onSubmit={handleUpload}
       >
         <div

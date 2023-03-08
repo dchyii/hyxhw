@@ -8,9 +8,11 @@ const Navbar = ({ user }) => {
           <h1 className="font-logo text-5xl">HY and HW </h1>
         </div>
         <div className=" px-5 flex items-center content-center">
-          <h3 className="bg-slate-700 border border-slate-800 rounded-full w-7 h-7 mx-2 text-white text-center">
-            {user?.charAt(0).toLowerCase()}
-          </h3>
+          {user && (
+            <h3 className="bg-slate-700 border border-slate-800 rounded-full w-7 h-7 mx-2 text-white text-center">
+              {user?.charAt(0).toLowerCase()}
+            </h3>
+          )}
           <h3 className="text-xl">{user}</h3>
         </div>
       </div>
