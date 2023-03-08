@@ -1,8 +1,30 @@
 import React, { useState } from "react";
 import Heart from "./Heart";
+import useLike from "../Utils/useLike";
 
 const Post = ({ postData, currentUser }) => {
   // console.log("post: ", postData);
+  const [likesArr, setLikesArr] = useState(postData.likes);
+  const [likedIndex, setLikedIndex] = useState(
+    likesArr.findIndex((likedUser) => likedUser === currentUser)
+  );
+  const [isLiked, setIsLiked] = useState(likedIndex >= 0 ? true : false);
+
+  const handleLike = () => {
+    const tempArr = likesArr;
+    likedIndex >= 0
+      ? tempArr.splice(likedIndex, 1)
+      : tempArr.splice(0, 0, currentUser);
+
+    // update UI
+    setLikesArr(tempArr);
+    setIsLiked(!isLiked);
+    setLikedIndex(likedIndex >= 0 ? -1 : 0);
+
+    // add handleLike backend code here
+    useLike(postData.id, tempArr);
+  };
+
   return (
     <div className="w-4/5 max-w-lg bg-white mx-auto my-8 border-2 border-slate-300 rounded-2xl overflow-hidden shadow-2xl">
       <img src={postData.url} className="aspect-auto" loading="lazy" />
@@ -14,11 +36,7 @@ const Post = ({ postData, currentUser }) => {
             </h3>
             <h3>{postData.user}</h3>
           </div>
-          <Heart
-            postId={postData.id}
-            likes={postData.likes}
-            currentUser={currentUser}
-          />
+          <Heart handleLike={handleLike} likes={likesArr} isLiked={isLiked} />
         </div>
         <p className=" mb-3 mt-2 px-3">{postData.caption}</p>
       </div>
