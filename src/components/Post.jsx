@@ -6,7 +6,7 @@ const Post = ({ postData, currentUser }) => {
   // console.log("post: ", postData);
   const [likesArr, setLikesArr] = useState(postData.likes);
   const [likedIndex, setLikedIndex] = useState(
-    likesArr.findIndex((likedUser) => likedUser === currentUser)
+    likesArr?.findIndex((likedUser) => likedUser === currentUser)
   );
   const [isLiked, setIsLiked] = useState(likedIndex >= 0 ? true : false);
 
