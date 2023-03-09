@@ -64,22 +64,19 @@ function App() {
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/firebase.User
           setUser(user);
-          setIsLoggedIn(true);
+          // setIsLoggedIn(true);
           setScreen("Is Logged In");
           fetchPost();
-          // setFirstLoad(false);
-          console.log("user: ", user);
+          // console.log("user: ", user);
         } else {
           setUser({});
-          setIsLoggedIn(false);
           setScreen("Not Logged In");
-          // setFirstLoad(false);
         }
       });
     };
 
     checkUser();
-  }, []);
+  }, [isLoggedIn]);
 
   let display = "";
 
