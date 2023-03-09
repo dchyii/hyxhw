@@ -14,13 +14,12 @@ const UploadScreen = ({ fnSetScreen, posts, fnSetPosts, user }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const storage = getStorage();
-  const storageRef = ref(storage, "images/" + file?.name);
-  const uploadTask = uploadBytesResumable(storageRef, file);
-
   const handleUpload = (e) => {
+    const storage = getStorage();
+    const storageRef = ref(storage, "images/" + file?.name);
+    const uploadTask = uploadBytesResumable(storageRef, file);
     e.preventDefault();
-    console.log("handle upload");
+    // console.log("handle upload");
     setIsUploading(true);
     uploadTask.on(
       "state_changed",
@@ -48,7 +47,7 @@ const UploadScreen = ({ fnSetScreen, posts, fnSetPosts, user }) => {
           const newPostRef = await addDoc(collection(db, "posts"), newPostData);
           posts.unshift({
             ...newPostData,
-            id: newPostRef,
+            id: newPostRef.id,
           });
           setProgress(0);
           setCaption("");
