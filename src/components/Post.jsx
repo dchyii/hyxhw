@@ -1,9 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import Heart from "./Heart";
 import useLike from "../Utils/useLike";
 
 const Post = ({ postData, currentUser }) => {
   // console.log("post: ", postData);
+  //! get image//
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    const originalImageRef = ref(getStorage(), `images/${postData.fileName}`);
+
+    const fileNameWithExt = postData.fileName.split(".");
+    const fileName = fileNameWithExt[0];
+    const ext = fileNameWithExt[1];
+    const scaledImageRef = ref(
+      getStorage(),
+      `images/scaled/${fileName}_512x512.${ext}`
+    );
+    getDownloadURL(scaledImageRef)
+      .then((url) => setUrl(url))
+      .catch(() => {
+        getDownloadURL(originalImageRef).then((url) => setUrl(url));
+      });
+  }, []);
+
+  //! handle likes//
   const [likesArr, setLikesArr] = useState(postData.likes);
   const [likedIndex, setLikedIndex] = useState(
     likesArr?.findIndex((likedUser) => likedUser === currentUser)
@@ -34,7 +56,7 @@ const Post = ({ postData, currentUser }) => {
   return (
     <div className="w-4/5 max-w-lg bg-white mx-auto my-8 border-2 border-slate-300 rounded-2xl overflow-hidden shadow-2xl">
       <img
-        src={postData.url}
+        src={url}
         className="aspect-auto"
         loading="lazy"
         onClick={handleClick}

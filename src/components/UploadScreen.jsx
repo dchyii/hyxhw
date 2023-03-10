@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import { doc, addDoc, serverTimestamp, collection } from "firebase/firestore";
+import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { addDoc, serverTimestamp, collection } from "firebase/firestore";
 import { db } from "../../firebase-config";
 
 const UploadScreen = ({ fnSetScreen, posts, fnSetPosts, user }) => {
   const [file, setFile] = useState(null);
   const [caption, setCaption] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   const handleUpload = (e) => {
     const storage = getStorage();
@@ -23,43 +17,36 @@ const UploadScreen = ({ fnSetScreen, posts, fnSetPosts, user }) => {
     setIsUploading(true);
     uploadTask.on(
       "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgress(progress);
+      () => {
+        console.log("uploading");
       },
       (error) => {
-        // console.error(error.message);
         alert("Upload failed. Please try again.");
-        setProgress(0);
         setIsUploading(false);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
-          console.log("url available at: ", downloadUrl);
-          const newPostData = {
-            caption: caption,
-            likes: [],
-            timestamp: serverTimestamp(),
-            url: downloadUrl,
-            user: user,
-          };
-          const newPostRef = await addDoc(collection(db, "posts"), newPostData);
-          posts.unshift({
-            ...newPostData,
-            id: newPostRef.id,
-          });
-          setProgress(0);
-          setCaption("");
-          setFile(null);
-          setIsUploading(false);
-          fnSetScreen("Is Logged In");
-          fnSetPosts(posts);
-          alert("Uploaded!");
+        const newPostData = {
+          caption: caption,
+          likes: [],
+          timestamp: serverTimestamp(),
+          user: user,
+          fileName: uploadTask.snapshot.ref.name,
+        };
+        const newPostRef = addDoc(collection(db, "posts"), newPostData);
+        posts.unshift({
+          ...newPostData,
+          id: newPostRef.id,
         });
+        setCaption("");
+        setFile(null);
+        setIsUploading(false);
+        fnSetScreen("Is Logged In");
+        fnSetPosts(posts);
+        alert("Uploaded!");
       }
     );
   };
+
   return (
     <div className="w-full h-full flex object-center items-center">
       <form
@@ -104,7 +91,7 @@ const UploadScreen = ({ fnSetScreen, posts, fnSetPosts, user }) => {
           className="font-logo text-2xl border border-slate-300 enabled:bg-green-300 disabled:bg-slate-200 rounded-lg px-5 py-1 my-3 enabled:cursor-pointer"
           disabled={isUploading ? true : !file || !caption ? true : false}
         >
-          {isUploading ? `${progress}%` : "POST!"}
+          {isUploading ? "UPLOADING ..." : "POST!"}
         </button>
       </form>
     </div>
