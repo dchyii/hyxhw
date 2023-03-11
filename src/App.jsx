@@ -27,7 +27,7 @@ function App() {
 
   const fetchPost = async () => {
     const postsArr = posts;
-    const fetchNumber = 4;
+    const fetchNumber = 10;
     // console.log("posts arr: ", postsArr);
     setIsLoading(true);
     const queryExpression = docBookmark
