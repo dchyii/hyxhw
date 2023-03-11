@@ -57,7 +57,7 @@ const Post = ({ postData, currentUser }) => {
     <div className="w-4/5 max-w-lg bg-white mx-auto my-8 border-2 border-slate-300 rounded-2xl overflow-hidden shadow-2xl">
       <img
         src={url}
-        className="aspect-auto"
+        className="aspect-auto w-full"
         loading="lazy"
         onClick={handleClick}
       />
