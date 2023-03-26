@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { addDoc, serverTimestamp, collection } from "firebase/firestore";
 import { db } from "../../firebase-config";
+import rand from "../Utils/randomName";
 
 const UploadScreen = ({ fnSetScreen, posts, fnSetPosts, user }) => {
   const [file, setFile] = useState(null);
@@ -9,8 +10,10 @@ const UploadScreen = ({ fnSetScreen, posts, fnSetPosts, user }) => {
   const [isUploading, setIsUploading] = useState(false);
 
   const handleUpload = (e) => {
+    const randFileName = rand();
+    const ext = file?.name.split(".")[1];
     const storage = getStorage();
-    const storageRef = ref(storage, "images/" + file?.name);
+    const storageRef = ref(storage, "images/" + randFileName + "." + ext);
     const uploadTask = uploadBytesResumable(storageRef, file);
     e.preventDefault();
     // console.log("handle upload");
